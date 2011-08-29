@@ -1,0 +1,5 @@
+.DS_Store
+Generator/build/*
+Generator/bin/debug/*
+Generator/src/*.pro.user*
+Generator/src/Makefile*
