@@ -3,9 +3,7 @@
  * 		Finite State Machine Engine.
  */
 
-/* Adapted for Ventec */
-/* #include "finite_state_machine_engine.h" */
-#include "../Util.h"
+#include "finite_state_machine_engine.h"
 
 /*---------------------------------------------------------------------------*/
 /* Private functions                                                         */

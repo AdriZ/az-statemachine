@@ -6,8 +6,6 @@
 #ifndef _FINITE_STATE_MACHINE_ENGINE_H
 #define _FINITE_STATE_MACHINE_ENGINE_H
 
-/* Adapted for Ventec */
-#include "../Util.h"
 
 /*---------------------------------------------------------------------------*/
 /* Defines                                                                   */
