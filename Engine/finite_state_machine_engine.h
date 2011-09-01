@@ -19,6 +19,14 @@
 /* Types                                                                     */
 /*---------------------------------------------------------------------------*/
 
+/** Type booleen */
+typedef enum
+{
+	FALSE	= 0,
+	TRUE	= 1
+} bool_t;
+
+
 /** Etat de la machine */
 typedef struct
 {
