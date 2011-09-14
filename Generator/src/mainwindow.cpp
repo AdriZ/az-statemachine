@@ -174,9 +174,21 @@ void MainWindow::on_generateButton_clicked()
 bool MainWindow::generateDot( QString baseName )
 {
 	bool _ret = false;
+    QString _generationPath = QDir::currentPath()+"/"GENERATED_DOC_DIRNAME;
+    QDir    _generationDir( _generationPath );
 	QString _filePath;
 
-	_filePath = QDir::currentPath() + "/" + baseName + ".dot";
+    // Create generation sub-dir
+    if( !_generationDir.exists( _generationPath ) )
+    {
+        if( !_generationDir.mkdir( _generationPath ) )
+        {
+            // On Fail
+            _generationPath = QDir::currentPath();
+        }
+    }
+
+    _filePath = _generationPath + "/" + baseName + ".dot";
 	QFile _file( _filePath );
 	if( openOutFile( _file ) )
 	{
@@ -193,9 +205,21 @@ bool MainWindow::generateDot( QString baseName )
 bool MainWindow::generateH( QString baseName )
 {
 	bool _ret = false;
-	QString _filePath;
+    QString _generationPath = QDir::currentPath()+"/"GENERATED_SRC_DIRNAME;
+    QDir    _generationDir( _generationPath );
+    QString _filePath;
 
-	_filePath = QDir::currentPath() + "/" + baseName + ".h";
+    // Create generation sub-dir
+    if( !_generationDir.exists( _generationPath ) )
+    {
+        if( !_generationDir.mkdir( _generationPath ) )
+        {
+            // On Fail
+            _generationPath = QDir::currentPath();
+        }
+    }
+
+    _filePath = _generationPath + "/" + baseName + ".h";
 	QFile _file( _filePath );
 	if( openOutFile( _file ) )
 	{
@@ -212,9 +236,21 @@ bool MainWindow::generateH( QString baseName )
 bool MainWindow::generateC( QString baseName )
 {
 	bool _ret = false;
-	QString _filePath;
+    QString _generationPath = QDir::currentPath()+"/"GENERATED_SRC_DIRNAME;
+    QDir    _generationDir( _generationPath );
+    QString _filePath;
 
-	_filePath = QDir::currentPath() + "/" + baseName + ".c";
+    // Create generation sub-dir
+    if( !_generationDir.exists( _generationPath ) )
+    {
+        if( !_generationDir.mkdir( _generationPath ) )
+        {
+            // On Fail
+            _generationPath = QDir::currentPath();
+        }
+    }
+
+    _filePath = _generationPath + "/" + baseName + ".c";
 	QFile _file( _filePath );
 	if( openOutFile( _file ) )
 	{
@@ -231,9 +267,21 @@ bool MainWindow::generateC( QString baseName )
 bool MainWindow::generateTxt( QString baseName )
 {
 	bool _ret = false;
-	QString _filePath;
+    QString _generationPath = QDir::currentPath()+"/"GENERATED_DOC_DIRNAME;
+    QDir    _generationDir( _generationPath );
+    QString _filePath;
 
-	_filePath = QDir::currentPath() + "/" + baseName + ".txt";
+    // Create generation sub-dir
+    if( !_generationDir.exists( _generationPath ) )
+    {
+        if( !_generationDir.mkdir( _generationPath ) )
+        {
+            // On Fail
+            _generationPath = QDir::currentPath();
+        }
+    }
+
+    _filePath = _generationPath + "/" + baseName + ".txt";
 	QFile _file( _filePath );
 	if( openOutFile( _file ) )
 	{

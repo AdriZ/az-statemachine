@@ -14,7 +14,8 @@
 
 #define STATE_LIST_VAR_NAME			m_fsmDesc.formatedTitle<<"_state_list"
 #define TRANSITION_MATRIX_VAR_NAME	m_fsmDesc.formatedTitle<<"_transition_matrix"
-#define DESCRIPTION_VAR_NAME		to1stUpper(m_fsmDesc.formatedTitle)<<"_description"
+#define DESCRIPTION_VAR_NAME		to1stUpper(m_fsmDesc.formatedTitle)
+//#define DESCRIPTION_VAR_NAME		to1stUpper(m_fsmDesc.formatedTitle)<<"_description"
 #define NB_OF_STATES_NAME			m_fsmDesc.formatedTitle.toUpper()<<"_NB_OF_STATES"
 
 #define TRANSITION_MATRIX_END	"END_FSM_TRANSITION_MATRIX"

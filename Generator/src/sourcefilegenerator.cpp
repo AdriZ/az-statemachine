@@ -209,13 +209,13 @@ void SourceFileGenerator::addAllTransitionFctPrototypes()
 
 void SourceFileGenerator::addVoidFctPrototype(QString name)
 {
-	m_out	<< "static void "<<name<<"(void);"<<endl;
+    m_out	<< "static void "<<name<<"( void );"<<endl;
 	//m_out	<< endl;
 }
 
 void SourceFileGenerator::addConditionFctPrototype(QString name)
 {
-	m_out	<< "static "<<BOOLEAN_RETURN_TYPE<<" "<<name<<"(void);"<<endl;
+    m_out	<< "static "<<BOOLEAN_RETURN_TYPE<<" "<<name<<"( void );"<<endl;
 	//m_out	<< endl;
 }
 
@@ -431,7 +431,7 @@ bool SourceFileGenerator::addActionFunction( t_transition transition )
 
 void SourceFileGenerator::addVoidFunction(QString name)
 {
-	m_out	<< "static void "<<name<<"(void)"<<endl
+    m_out	<< "static void "<<name<<"( void )"<<endl
 			<< "{"<<endl
 			<< "}"<<endl
 			<< endl;
@@ -439,9 +439,9 @@ void SourceFileGenerator::addVoidFunction(QString name)
 
 void SourceFileGenerator::addBooleanFunction(QString name)
 {
-	m_out	<< "static "<<BOOLEAN_RETURN_TYPE<<" "<<name<<"(void)"<<endl
+    m_out	<< "static "<<BOOLEAN_RETURN_TYPE<<" "<<name<<"( void )"<<endl
 			<< "{"<<endl
-			<< "\t"<<"return( TRUE );"<<endl
+            << "\t"<<"return ( TRUE );"<<endl
 			<< "}"<<endl
 			<< endl;
 }

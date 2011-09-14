@@ -5,6 +5,10 @@
 #include <QFileInfo>
 #include "smdescription.h"
 
+#define GENERATED_SRC_DIRNAME   "Generated_src"
+#define GENERATED_DOC_DIRNAME   "Generated_doc"
+
+
 namespace Ui {
     class MainWindow;
 }
