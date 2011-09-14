@@ -121,15 +121,6 @@ void SourceFileGenerator::addStateEnum()
 
 void SourceFileGenerator::addGlobalVarDefinitions()
 {
-#if 0
-	// Not usefull to share these variables
-	m_out	<< "/** State list definition of \""<<m_fsmDesc.title<<"\" */"<<endl
-			<< "extern "<<STATE_LIST_TYPE<<" "<<STATE_LIST_VAR_NAME<<";"<<endl
-			<< endl
-			<< "/** Transition matrix definition of \""<<m_fsmDesc.title<<"\" */"<<endl
-			<< "extern "<<TRANSITION_MATRIX_TYPE<<" "<<TRANSITION_MATRIX_VAR_NAME<<";"<<endl
-			<< endl;
-#endif
 	m_out	<< "/** Whole description of the finite state machine \""<<m_fsmDesc.title<<"\" */"<<endl
 			<< "extern "<<DESCRIPTION_TYPE<<" "<<DESCRIPTION_VAR_NAME<<";"<<endl
 			<< endl;
@@ -226,7 +217,7 @@ void SourceFileGenerator::addStateList()
 	QString during;
 
 	m_out	<< "/** State list definition of \""<<m_fsmDesc.title<<"\" */"<<endl
-			<< "static "<<STATE_LIST_TYPE<<" "<<STATE_LIST_VAR_NAME<<" ="<<endl
+                        << "static const "<<STATE_LIST_TYPE<<" "<<STATE_LIST_VAR_NAME<<" ="<<endl
 			<< "{"<<endl
 			<< " /* {state_id,   entry_function,   during_function}, */"<<endl;
 	for( int _i=0; _i < m_fsmDesc.stateList.size(); _i++)
@@ -265,7 +256,7 @@ void SourceFileGenerator::addTransitionMatrix()
 	QString action;
 
 	m_out	<< "/** Transition matrix definition of \""<<m_fsmDesc.title<<"\" */"<<endl
-			<< "static "<<TRANSITION_MATRIX_TYPE<<" "<<TRANSITION_MATRIX_VAR_NAME<<" ="<<endl
+                        << "static const "<<TRANSITION_MATRIX_TYPE<<" "<<TRANSITION_MATRIX_VAR_NAME<<" ="<<endl
 			<< "{"<<endl
 			<< " /* {from_state_id,   to_state_id,   condition_function,   action_function}, */"<<endl;
 	for( int _i=0; _i < m_fsmDesc.transitionList.size(); _i++)
