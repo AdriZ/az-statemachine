@@ -1,7 +1,38 @@
 /**
  * @file
  * 		Header file of the Finite State Machine Engine.
+ *
+ * @author		Adrien Zancan
+ * @copyright	Simplified BSD License
  */
+
+/*
+	The files finite_state_machine_engine.h and finite_state_machine_engine.c are
+	provided under the terms of the "Simplified BSD License".
+
+	Copyright (c) 2011, Adrien ZANCAN
+	All rights reserved.
+
+	Redistribution and use in source and binary forms, with or without
+	modification, are permitted provided that the following conditions are met:
+
+	1. Redistributions of source code must retain the above copyright notice, this
+	   list of conditions and the following disclaimer.
+	2. Redistributions in binary form must reproduce the above copyright notice,
+	   this list of conditions and the following disclaimer in the documentation
+	   and/or other materials provided with the distribution.
+
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+	DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+	ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+	(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+	LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+	ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 
 #ifndef _FINITE_STATE_MACHINE_ENGINE_H
 #define _FINITE_STATE_MACHINE_ENGINE_H
@@ -97,6 +128,8 @@ void EntryInState( fsm_description_t *fsm_desc, int state_id );
 
 /**
  * Retourne l'etat "state_id" dans lequel est actuellement la machine d'etat.
+ * Remarque: fsm_desc est passe par parametre pour des raisons de performance
+ * mais n'est pas modifie par la fonction.
  *
  * @param[in]		fsm_desc
  *		Structure de description de la machine d'etat.
@@ -104,7 +137,7 @@ void EntryInState( fsm_description_t *fsm_desc, int state_id );
  * @return
  *		Etat "state_id" dans lequel est la machine d'etat.
  */
-int GetCurrentStateId( fsm_description_t fsm_desc );
+int GetCurrentStateId( fsm_description_t *fsm_desc );
 
 /**
  * Fonction qui ne fait que retourner TRUE.
