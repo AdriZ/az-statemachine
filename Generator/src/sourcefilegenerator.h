@@ -12,14 +12,18 @@
 #define TRANSITION_MATRIX_TYPE		"fsm_transition_matrix_t"
 #define DESCRIPTION_TYPE			"fsm_description_t"
 
-#define STATE_LIST_VAR_NAME			m_fsmDesc.formatedTitle<<"_state_list"
-#define TRANSITION_MATRIX_VAR_NAME	m_fsmDesc.formatedTitle<<"_transition_matrix"
-#define DESCRIPTION_VAR_NAME		to1stUpper(m_fsmDesc.formatedTitle)
-//#define DESCRIPTION_VAR_NAME		to1stUpper(m_fsmDesc.formatedTitle)<<"_description"
+#define STATE_LIST_VAR_NAME			"s_"<<m_fsmDesc.formatedTitle<<"_state_list"
+#define TRANSITION_MATRIX_VAR_NAME	"s_"<<m_fsmDesc.formatedTitle<<"_transition_matrix"
+#define DESCRIPTION_VAR_NAME		"g_"<<m_fsmDesc.formatedTitle
 #define NB_OF_STATES_NAME			m_fsmDesc.formatedTitle.toUpper()<<"_NB_OF_STATES"
 
-#define TRANSITION_MATRIX_END	"END_FSM_TRANSITION_MATRIX"
+// Examples to adapt to users coding conventions
+//#define STATE_LIST_VAR_NAME			m_fsmDesc.formatedTitle<<"_state_list"
+//#define TRANSITION_MATRIX_VAR_NAME	m_fsmDesc.formatedTitle<<"_transition_matrix"
+//#define DESCRIPTION_VAR_NAME		to1stUpper(m_fsmDesc.formatedTitle)
+//#define DESCRIPTION_VAR_NAME		to1stUpper(m_fsmDesc.formatedTitle)<<"_description"
 
+#define TRANSITION_MATRIX_END	"END_FSM_TRANSITION_MATRIX"
 
 
 class SourceFileGenerator
