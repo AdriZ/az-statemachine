@@ -39,9 +39,9 @@ void SMDescription::addState(t_state state)
 			stateList[_existingStateIndex].entryFct = state.entryFct;
 		if( state.duringFct != "" )
 			stateList[_existingStateIndex].duringFct = state.duringFct;
-		if( state.isInit != FALSE )
+        if( state.isInit != false )
 			stateList[_existingStateIndex].isInit = state.isInit;
-		if( state.isError != FALSE )
+        if( state.isError != false )
 			stateList[_existingStateIndex].isError = state.isError;
 	}
 }
