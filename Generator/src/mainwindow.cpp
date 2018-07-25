@@ -36,45 +36,52 @@ void MainWindow::open()
 	m_inFileName = QFileDialog::getOpenFileName(this, tr("Open AZ State Machine XML File"),
 												QDir::currentPath(),
 												tr("XAZSM Files (*.xazsm *.xml)"));
-	if (m_inFileName.isEmpty())
-		return;
+    openParsePreviousFile();
+}
 
-	QFile inFile(m_inFileName);
-	if (!inFile.open(QFile::ReadOnly | QFile::Text)) {
-		QMessageBox::warning(this, tr("AZ State Machine"),
-							 tr("Cannot read file %1:\n%2.")
-							 .arg(m_inFileName)
-							 .arg(inFile.errorString()));
-		return;
-	}
+void MainWindow::openParsePreviousFile()
+{
+    m_inFileHasBeenParsed = false;
 
-	m_inFileInfo.setFile( inFile );
-	QDir::setCurrent( m_inFileInfo.absolutePath() );
+    if (m_inFileName.isEmpty())
+        return;
 
-	//--------------------
-	// Parse opened file and save it in SMDescription
+    QFile inFile(m_inFileName);
+    if (!inFile.open(QFile::ReadOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("AZ State Machine"),
+                             tr("Cannot read file %1:\n%2.")
+                             .arg(m_inFileName)
+                             .arg(inFile.errorString()));
+        return;
+    }
 
-	m_stateMachineDesc.clear();
+    m_inFileInfo.setFile( inFile );
+    QDir::setCurrent( m_inFileInfo.absolutePath() );
 
-	XmlHandler handler(&m_stateMachineDesc);
-	QXmlSimpleReader reader;
-	reader.setContentHandler(&handler);
+    //--------------------
+    // Parse opened file and save it in SMDescription
 
-	QXmlInputSource xmlInputSource(&inFile);
-	if( ! reader.parse(xmlInputSource) )
-	{
-		QMessageBox::warning( this, tr("AZ State Machine"),
-							  tr("Cannot parse the file\n%1")
-							  .arg( handler.errorString() ) );
-	}
-	else
-	{
-		m_inFileHasBeenParsed = true;
-		ui->generateButton->setEnabled(true);
-		statusBar()->showMessage(tr("XML file parsed"), 10000);
-	}
+    m_stateMachineDesc.clear();
 
-	//m_stateMachineDesc.debugTransitionList();
+    XmlHandler handler(&m_stateMachineDesc);
+    QXmlSimpleReader reader;
+    reader.setContentHandler(&handler);
+
+    QXmlInputSource xmlInputSource(&inFile);
+    if( ! reader.parse(xmlInputSource) )
+    {
+        QMessageBox::warning( this, tr("AZ State Machine"),
+                              tr("Cannot parse the file\n%1")
+                              .arg( handler.errorString() ) );
+    }
+    else
+    {
+        m_inFileHasBeenParsed = true;
+        ui->generateButton->setEnabled(true);
+        statusBar()->showMessage(tr("XML file parsed"), 10000);
+    }
+
+    //m_stateMachineDesc.debugTransitionList();
 }
 
 void MainWindow::createActions()
@@ -127,6 +134,8 @@ void MainWindow::on_generateButton_clicked()
 										 QDir::currentPath(),
 										 tr("Graphviz Files (*.dot)"));
 #endif
+
+    openParsePreviousFile();
 
 	if( ! m_inFileHasBeenParsed )
 	{
