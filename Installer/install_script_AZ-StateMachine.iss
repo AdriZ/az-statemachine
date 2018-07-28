@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AZ-StateMachine"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.1"
 #define MyAppPublisher "Adrien Zancan"
-#define MyAppURL "https://gitorious.org/az-statemachine"
+#define MyAppURL "https://github.com/AdriZ/az-statemachine"
 #define MyAppExeName "AZ-StateMachine-Generator.exe"
 
 [Setup]
@@ -36,9 +36,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "..\Generator\bin\release\Windows\AZ-StateMachine-Generator.exe"; DestDir: "{app}\Generator"; Flags: ignoreversion
+Source: "..\Generator\bin\release\win32\AZ-StateMachine-Generator.exe"; DestDir: "{app}\Generator"; Flags: ignoreversion
 Source: "..\Engine\*"; DestDir: "{app}\Engine"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Generator\bin\release\Windows\*.dll"; DestDir: "{app}\Generator"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Generator\bin\release\win32\*"; DestDir: "{app}\Generator"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
