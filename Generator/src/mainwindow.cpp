@@ -183,7 +183,7 @@ void MainWindow::on_generateButton_clicked()
 bool MainWindow::generateDot( QString baseName )
 {
 	bool _ret = false;
-    QString _generationPath = QDir::currentPath()+"/"GENERATED_DOC_DIRNAME;
+    QString _generationPath = QDir::currentPath()+"/" GENERATED_DOC_DIRNAME;
     QDir    _generationDir( _generationPath );
 	QString _filePath;
 
@@ -214,7 +214,7 @@ bool MainWindow::generateDot( QString baseName )
 bool MainWindow::generateH( QString baseName )
 {
 	bool _ret = false;
-    QString _generationPath = QDir::currentPath()+"/"GENERATED_SRC_DIRNAME;
+    QString _generationPath = QDir::currentPath()+"/" GENERATED_SRC_DIRNAME;
     QDir    _generationDir( _generationPath );
     QString _filePath;
 
@@ -245,7 +245,7 @@ bool MainWindow::generateH( QString baseName )
 bool MainWindow::generateC( QString baseName )
 {
 	bool _ret = false;
-    QString _generationPath = QDir::currentPath()+"/"GENERATED_SRC_DIRNAME;
+    QString _generationPath = QDir::currentPath()+"/" GENERATED_SRC_DIRNAME;
     QDir    _generationDir( _generationPath );
     QString _filePath;
 
@@ -276,7 +276,7 @@ bool MainWindow::generateC( QString baseName )
 bool MainWindow::generateTxt( QString baseName )
 {
 	bool _ret = false;
-    QString _generationPath = QDir::currentPath()+"/"GENERATED_DOC_DIRNAME;
+    QString _generationPath = QDir::currentPath()+"/" GENERATED_DOC_DIRNAME;
     QDir    _generationDir( _generationPath );
     QString _filePath;
 
