@@ -36,7 +36,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
 
-    void openParsePreviousFile();
+    void openAndParsePreviousFile();
 
 	void createActions();
 	void createMenus();

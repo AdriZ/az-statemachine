@@ -36,10 +36,10 @@ void MainWindow::open()
 	m_inFileName = QFileDialog::getOpenFileName(this, tr("Open AZ State Machine XML File"),
 												QDir::currentPath(),
 												tr("XAZSM Files (*.xazsm *.xml)"));
-    openParsePreviousFile();
+    openAndParsePreviousFile();
 }
 
-void MainWindow::openParsePreviousFile()
+void MainWindow::openAndParsePreviousFile()
 {
     m_inFileHasBeenParsed = false;
 
@@ -59,7 +59,21 @@ void MainWindow::openParsePreviousFile()
     QDir::setCurrent( m_inFileInfo.absolutePath() );
 
     //--------------------
+    // Copy file in Text editor
+    QByteArray sampleXml = inFile.readAll();
+    ui->txt_zone->setPlainText(sampleXml);
+
+    inFile.close();
+
+    //--------------------
     // Parse opened file and save it in SMDescription
+    if (!inFile.open(QFile::ReadOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("AZ State Machine"),
+                             tr("Cannot read file %1:\n%2.")
+                             .arg(m_inFileName)
+                             .arg(inFile.errorString()));
+        return;
+    }
 
     m_stateMachineDesc.clear();
 
@@ -80,6 +94,8 @@ void MainWindow::openParsePreviousFile()
         ui->generateButton->setEnabled(true);
         statusBar()->showMessage(tr("XML file parsed"), 10000);
     }
+
+    inFile.close();
 
     //m_stateMachineDesc.debugTransitionList();
 }
@@ -135,7 +151,7 @@ void MainWindow::on_generateButton_clicked()
 										 tr("Graphviz Files (*.dot)"));
 #endif
 
-    openParsePreviousFile();
+    openAndParsePreviousFile();
 
 	if( ! m_inFileHasBeenParsed )
 	{
