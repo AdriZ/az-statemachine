@@ -1,6 +1,8 @@
 #include <QtDebug>
 #include <QFileDialog>
 #include <QMessageBox>
+// ---- Test use of Graphviz library ----
+#include <gvc.h>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -222,7 +224,31 @@ bool MainWindow::generateDot( QString baseName )
 		_generator.generate( m_stateMachineDesc );
 		qDebug() << _filePath << " generated.";
 		_ret = true;
-	}
+
+        // ---- Test use of Graphviz library ----
+        _file.close();
+
+        GVC_t *gvc = nullptr;
+        Agraph_t *g = nullptr;
+        FILE *fp;
+        QString _outPath(_filePath);
+
+        _outPath += ".png";
+
+        gvc = gvContext();
+
+        fp = fopen(_filePath.toUtf8(), "r");
+        g = agread(fp, nullptr);
+
+        gvLayout(gvc, g, "dot");
+        gvRenderFilename(gvc, g, "png", _outPath.toUtf8());
+        gvFreeLayout(gvc, g);
+        agclose(g);
+
+        qDebug() << gvFreeContext(gvc);
+
+        // ---- Test use of Graphviz library ----
+    }
 	return _ret;
 }
 

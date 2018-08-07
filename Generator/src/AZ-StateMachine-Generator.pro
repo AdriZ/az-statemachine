@@ -20,6 +20,10 @@ UI_DIR		= "$$BUILD_DIR"
 MOC_DIR		= "$$BUILD_DIR"
 OBJECTS_DIR = "$$BUILD_DIR"
 
+#GraphViz library
+!include(./graphviz.pri) {
+     error("fail open graphviz.pri")
+ }
 
 CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
@@ -29,8 +33,8 @@ CONFIG(debug, debug|release) {
     win32 {
         DESTDIR = "$$BIN_DIR/release/win32"
 
-        # Copie des dll utiles dans le répertoire release
-        # La commande "copy" de Windows n'accepte pas les chemins d'accès avec des slash, on les remplace donc par des backslash
+        # Copie des dll utiles dans le rÃ©pertoire release
+        # La commande "copy" de Windows n'accepte pas les chemins d'accÃ¨s avec des slash, on les remplace donc par des backslash
         DESTDIR_WIN = $${DESTDIR}
         DESTDIR_WIN ~= s,/,\\,g
 
@@ -38,7 +42,7 @@ CONFIG(debug, debug|release) {
         postbuild.depends   += FORCE
         greaterThan(QT_MAJOR_VERSION, 4) {
             # Qt5
-            # windeployqt récupère automatiquement toutes les dll requises
+            # windeployqt rÃ©cupÃ¨re automatiquement toutes les dll requises
             QMAKE_POST_LINK = windeployqt.exe "$$DESTDIR_WIN"
         } else {
             # Qt4
