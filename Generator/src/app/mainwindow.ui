@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>571</width>
-    <height>464</height>
+    <width>842</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,6 +94,19 @@
       </item>
      </layout>
     </item>
+    <item row="0" column="1">
+     <widget class="AutoscaledPix" name="render">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Render</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -101,7 +114,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>571</width>
+     <width>842</width>
      <height>22</height>
     </rect>
    </property>
@@ -117,6 +130,13 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>AutoscaledPix</class>
+   <extends>QLabel</extends>
+   <header>autoscaled_pix.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

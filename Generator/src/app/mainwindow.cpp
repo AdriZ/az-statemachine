@@ -247,6 +247,10 @@ bool MainWindow::generateDot( QString baseName )
 
         qDebug() << gvFreeContext(gvc);
 
+        fclose(fp);
+
+        ui->render->setPixmap(QPixmap(_outPath));
+
         // ---- Test use of Graphviz library ----
     }
 	return _ret;

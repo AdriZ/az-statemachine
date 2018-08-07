@@ -12,18 +12,15 @@ TARGET = AZ-StateMachine-Generator
 TEMPLATE = app
 
 PARENT_DIR	= ".."
-BUILD_DIR	= "$$PARENT_DIR/build"
-BIN_DIR		= "$$PARENT_DIR/bin"
+BUILD_DIR	= "$${PARENT_DIR}/build"
+BIN_DIR		= "$${PARENT_DIR}/bin"
+CODE_DIR	= "$${PARENT_DIR}/src/app"
+COTS_DIR	= "$${PARENT_DIR}/src/cots"
 
 RCC_DIR		= "$$BUILD_DIR"
 UI_DIR		= "$$BUILD_DIR"
 MOC_DIR		= "$$BUILD_DIR"
 OBJECTS_DIR = "$$BUILD_DIR"
-
-#GraphViz library
-!include(./graphviz.pri) {
-     error("fail open graphviz.pri")
- }
 
 CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
@@ -66,20 +63,5 @@ CONFIG(debug, debug|release) {
     error(Unknown set of dependencies.)
 }
 
-
-SOURCES += main.cpp\
-	mainwindow.cpp \
-    smdescription.cpp \
-    dotfilegenerator.cpp \
-    xmlhandler.cpp \
-    sourcefilegenerator.cpp \
-	docfilegenerator.cpp
-
-HEADERS  += mainwindow.h \
-    smdescription.h \
-    dotfilegenerator.h \
-    xmlhandler.h \
-    sourcefilegenerator.h \
-	docfilegenerator.h
-
-FORMS    += mainwindow.ui
+include($${CODE_DIR}/app.pri)
+include($${COTS_DIR}/cots.pri)
