@@ -4,12 +4,14 @@
 // ---- Test use of Graphviz library ----
 #include <gvc.h>
 
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "xmlhandler.h"
 #include "dotfilegenerator.h"
 #include "sourcefilegenerator.h"
 #include "docfilegenerator.h"
+#include "xlsxfilegenerator.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -193,6 +195,10 @@ void MainWindow::on_generateButton_clicked()
 		if( generateTxt( _baseName ) )
 			_nbFilesGenerated++;
 
+    // Generate .xlsx file
+    if( ui->genXlsxCheckBox->isChecked() )
+        if( generateXlsx( _baseName ) )
+            _nbFilesGenerated++;
 
 	statusBar()->showMessage(tr("%1 file(s) generated").arg(_nbFilesGenerated), 10000);
 }
@@ -345,6 +351,34 @@ bool MainWindow::generateTxt( QString baseName )
 		_generator.generate( m_stateMachineDesc );
 		qDebug() << _filePath << " generated.";
 		_ret = true;
-	}
+    }
 	return _ret;
+}
+
+// Generate .xlsx file
+bool MainWindow::generateXlsx( QString baseName )
+{
+    bool _ret = false;
+    QString _generationPath = QDir::currentPath()+"/" GENERATED_DOC_DIRNAME;
+    QDir    _generationDir( _generationPath );
+    QString _filePath;
+
+    // Create generation sub-dir
+    if( !_generationDir.exists( _generationPath ) )
+    {
+        if( !_generationDir.mkdir( _generationPath ) )
+        {
+            // On Fail
+            _generationPath = QDir::currentPath();
+        }
+    }
+
+    _filePath = _generationPath + "/" + baseName + ".xlsx";
+    // Generate
+    XlsxFileGenerator _generator( _filePath );
+    _generator.generate( m_stateMachineDesc );
+    qDebug() << _filePath << " generated.";
+    _ret = true;
+
+    return _ret;
 }

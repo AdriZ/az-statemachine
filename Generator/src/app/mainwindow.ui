@@ -24,7 +24,20 @@
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QPlainTextEdit" name="txt_zone"/>
+       <widget class="QPlainTextEdit" name="txt_zone">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>300</height>
+         </size>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -64,7 +77,14 @@
            <string>Generate function documentation file (.txt)</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="genXlsxCheckBox">
+          <property name="text">
+           <string>Generate MS Visio importable Excel file (.xlsx)</string>
           </property>
          </widget>
         </item>

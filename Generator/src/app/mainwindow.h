@@ -41,10 +41,11 @@ private:
 	void createActions();
 	void createMenus();
 
-	bool generateDot( QString baseName );
-	bool generateH( QString baseName );
-	bool generateC( QString baseName );
-	bool generateTxt( QString baseName );
+    bool generateDot(QString baseName);
+    bool generateH(QString baseName);
+    bool generateC(QString baseName);
+    bool generateTxt(QString baseName);
+    bool generateXlsx(QString baseName);
 
 	QMenu *fileMenu;
 	QAction *openAct;

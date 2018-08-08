@@ -10,7 +10,8 @@ SOURCES += \
     $$PWD/dotfilegenerator.cpp \
     $$PWD/xmlhandler.cpp \
     $$PWD/sourcefilegenerator.cpp \
-    $$PWD/docfilegenerator.cpp
+    $$PWD/docfilegenerator.cpp \
+    $$PWD/xlsxfilegenerator.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -18,7 +19,8 @@ HEADERS += \
     $$PWD/dotfilegenerator.h \
     $$PWD/xmlhandler.h \
     $$PWD/sourcefilegenerator.h \
-    $$PWD/docfilegenerator.h
+    $$PWD/docfilegenerator.h \
+    $$PWD/xlsxfilegenerator.h
 
 FORMS += \
     $$PWD/mainwindow.ui

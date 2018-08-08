@@ -36,6 +36,7 @@ public:
 	void debugTransitionList();
 	void clear();
 
+    // TODO: set private and use acessors
 	t_state_list stateList;
 	t_transition_list transitionList;
 	QString title;
