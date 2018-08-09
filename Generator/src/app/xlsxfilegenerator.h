@@ -19,16 +19,12 @@ public:
     } t_line;
 
 public:
-    XlsxFileGenerator(const QString &whole_file_path);
+    XlsxFileGenerator();
 
-    void generate(const SMDescription &sm_desc);
+    static void generate(const SMDescription &sm_desc,
+                         const QString &whole_file_path);
 
 private:
-    QString m_whole_file_path;
-    QXlsx::Document m_xlsx;
-
-    QList<t_line> m_line_list;
-
     static void initLine(t_line &line);
 
     static void buildLineList(QList<t_line> &line_list,

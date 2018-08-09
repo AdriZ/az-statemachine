@@ -2,18 +2,21 @@
 #include <QtDebug>
 #include <QDate>
 
-XlsxFileGenerator::XlsxFileGenerator(const QString &whole_file_path)
-    : m_whole_file_path(whole_file_path)
+XlsxFileGenerator::XlsxFileGenerator()
 {
 
 }
 
-void XlsxFileGenerator::generate(const SMDescription &sm_desc)
+void XlsxFileGenerator::generate(const SMDescription &sm_desc,
+                                 const QString &whole_file_path)
 {
-    buildLineList(m_line_list, sm_desc);
-    fillXlsx(m_xlsx, sm_desc, m_line_list);
+    QXlsx::Document _xlsx;
+    QList<t_line> _line_list;
 
-    m_xlsx.saveAs(m_whole_file_path);
+    buildLineList(_line_list, sm_desc);
+    fillXlsx(_xlsx, sm_desc, _line_list);
+
+    _xlsx.saveAs(whole_file_path);
 }
 
 void XlsxFileGenerator::initLine(XlsxFileGenerator::t_line &line)

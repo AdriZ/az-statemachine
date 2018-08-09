@@ -375,8 +375,7 @@ bool MainWindow::generateXlsx( QString baseName )
 
     _filePath = _generationPath + "/" + baseName + ".xlsx";
     // Generate
-    XlsxFileGenerator _generator( _filePath );
-    _generator.generate( m_stateMachineDesc );
+    XlsxFileGenerator::generate( m_stateMachineDesc, _filePath );
     qDebug() << _filePath << " generated.";
     _ret = true;
 
