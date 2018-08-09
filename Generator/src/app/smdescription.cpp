@@ -11,7 +11,25 @@ void SMDescription::clear()
 	transitionList.clear();
 	title.clear();
 	initState.clear();
-	errorState.clear();
+    errorState.clear();
+}
+
+bool SMDescription::getStateId(int &id, const QString &state_name) const
+{
+    int _state_id = 0;
+    bool _is_found = false;
+
+    while( _state_id < stateList.size() && _is_found == false )
+    {
+        if ( stateList.at(_state_id).name == state_name )
+        {
+            id = stateList.at(_state_id).id;
+            _is_found = true;
+        }
+        _state_id++;
+    }
+
+    return _is_found;
 }
 
 void SMDescription::addState(t_state state)
@@ -30,6 +48,7 @@ void SMDescription::addState(t_state state)
 	if( !_stateAlreadyExists )
 	{
         // Save it in the list
+        state.id = stateList.size();
         stateList.append(state);
     }
 	else

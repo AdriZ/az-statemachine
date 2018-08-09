@@ -6,6 +6,7 @@
 
 typedef struct
 {
+    int id;
 	QString name;
 	QString entryFct;
 	QString duringFct;
@@ -35,6 +36,11 @@ public:
 	void addTransition(t_transition transition);
 	void debugTransitionList();
 	void clear();
+
+    bool getStateId(int &id, const QString &state_name) const;
+
+    const t_state_list& getStateList() const { return stateList; }
+    const t_transition_list& getTransitionList() const { return transitionList; }
 
     // TODO: set private and use acessors
 	t_state_list stateList;
