@@ -30,8 +30,13 @@ private:
     QList<t_line> m_line_list;
 
     static void initLine(t_line &line);
-    static void buildLineList(QList<t_line> &line_list, const SMDescription &sm_desc);
-    static void fillXlsx(QXlsx::Document &xlsx, const QList<t_line> &line_list);
+
+    static void buildLineList(QList<t_line> &line_list,
+                              const SMDescription &sm_desc);
+
+    static void fillXlsx(QXlsx::Document &xlsx,
+                         const SMDescription &sm_desc,
+                         const QList<t_line> &line_list);
 };
 
 #endif // XLSXFILEGENERATOR_H

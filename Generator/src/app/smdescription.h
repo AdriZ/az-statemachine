@@ -41,6 +41,7 @@ public:
 
     const t_state_list& getStateList() const { return stateList; }
     const t_transition_list& getTransitionList() const { return transitionList; }
+    const QString& getTitle() const { return title; }
 
     // TODO: set private and use acessors
 	t_state_list stateList;
