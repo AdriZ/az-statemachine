@@ -2,21 +2,40 @@
 #include <QtDebug>
 #include <QDate>
 
+/* --- Public --- */
+
 XlsxFileGenerator::XlsxFileGenerator()
 {
 
 }
 
-void XlsxFileGenerator::generate(const SMDescription &sm_desc,
-                                 const QString &whole_file_path)
+void XlsxFileGenerator::generate(const QString &whole_file_path,
+                                 const SMDescription &sm_desc)
 {
     QXlsx::Document _xlsx;
+
+    generate(_xlsx, sm_desc);
+    _xlsx.saveAs(whole_file_path);
+}
+
+void XlsxFileGenerator::generate(QIODevice *file,
+                                 const SMDescription &sm_desc)
+{
+    QXlsx::Document _xlsx;
+
+    generate(_xlsx, sm_desc);
+    _xlsx.saveAs(file);
+}
+
+/* --- Private --- */
+
+void XlsxFileGenerator::generate(QXlsx::Document &xlsx,
+                                 const SMDescription &sm_desc)
+{
     QList<t_line> _line_list;
 
     buildLineList(_line_list, sm_desc);
-    fillXlsx(_xlsx, sm_desc, _line_list);
-
-    _xlsx.saveAs(whole_file_path);
+    fillXlsx(xlsx, _line_list, sm_desc);
 }
 
 void XlsxFileGenerator::initLine(XlsxFileGenerator::t_line &line)
@@ -31,6 +50,11 @@ void XlsxFileGenerator::initLine(XlsxFileGenerator::t_line &line)
 void XlsxFileGenerator::buildLineList(QList<t_line> &line_list, const SMDescription &sm_desc)
 {
     t_line _line;
+
+    if ( !line_list.isEmpty() )
+    {
+        line_list.clear();
+    }
 
     // For each state
     for( int _state_id = 0; _state_id < sm_desc.getStateList().size(); _state_id++ )
@@ -76,8 +100,8 @@ void XlsxFileGenerator::buildLineList(QList<t_line> &line_list, const SMDescript
 }
 
 void XlsxFileGenerator::fillXlsx(QXlsx::Document &xlsx,
-                                 const SMDescription &sm_desc,
-                                 const QList<XlsxFileGenerator::t_line> &line_list)
+                                 const QList<XlsxFileGenerator::t_line> &line_list,
+                                 const SMDescription &sm_desc)
 {
     int _cell_line = 1;
 
@@ -91,7 +115,7 @@ void XlsxFileGenerator::fillXlsx(QXlsx::Document &xlsx,
     _cell_line++;
 
     xlsx.write(_cell_line, 1, "How to import in Visio:");
-    xlsx.write(_cell_line, 2, "https://support.office.com/en-us/article/create-a-data-visualizer-diagram-17211b46-d144-4ca2-9ea7-b0f48f0ae0a6?ui=en-US&rs=en-US&ad=US#ID0EBAEAAA=ID");
+    xlsx.write(_cell_line, 2, "https://support.office.com/en-us/article/create-a-data-visualizer-diagram-17211b46-d144-4ca2-9ea7-b0f48f0ae0a6?ui=en-US");
     _cell_line++;
 
     // Empty line
