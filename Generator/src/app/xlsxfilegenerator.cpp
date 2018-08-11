@@ -64,7 +64,14 @@ void XlsxFileGenerator::buildLineList(QList<t_line> &line_list, const SMDescript
         initLine(_line);
         _line.id = _state.id;
         _line.name = _state.name;
-        _line.shape = "Process";
+        if ( _state.isInit )
+        {
+            _line.shape = "Start";
+        }
+        else
+        {
+            _line.shape = "Process";
+        }
 
         // Seek transitions
         for ( int _transition_id = 0; _transition_id < sm_desc.getTransitionList().size(); _transition_id++ )

@@ -4,6 +4,8 @@
 #include <QString>
 #include <QList>
 
+/// @todo : Move these types inside SMDescription class.
+
 typedef struct
 {
     int id;
