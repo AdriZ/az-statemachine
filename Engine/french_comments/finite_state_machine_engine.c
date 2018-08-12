@@ -1,10 +1,8 @@
 /**
  * @file
  * 		Finite State Machine Engine.
- *      See https://github.com/AdriZ/az-statemachine for more informations.
  *
  * @author		Adrien Zancan
- * @version     v1.1
  * @copyright	Simplified BSD License
  */
 
@@ -131,11 +129,11 @@ static void ExecuteTransitionAction( fsm_transition_t transition )
 /*---------------------------------------------------------------------------*/
 
 /**
- * Intialize the state machine in its "init_state_id" state.
- * Run the entry_fct of this state.
+ * Initialise la machine d'etat a son etat d'initialisation "init_state_id".
+ * Execute la fonction "entry" de cet etat.
  *
- * @param[in,out]    fsm_desc
- *      State machine to be initialized.
+ * @param[in,out]	fsm_desc
+ *		Structure de description de la machine d'etat a initialiser.
  */
 void InitStateMachine( fsm_description_t *fsm_desc )
 {
@@ -144,10 +142,10 @@ void InitStateMachine( fsm_description_t *fsm_desc )
 
 
 /**
- * One step run of the state machine.
+ * Fait avancer d'un pas la machine d'etat.
  *
- * @param[in,out]    fsm_desc
- *      State machine to be advanced.
+ * @param[in,out]	fsm_desc
+ *		Structure de description de la machine d'etat a faire avancer.
  */
 void AdvanceStateMachine( fsm_description_t	*fsm_desc )
 {
@@ -180,14 +178,14 @@ void AdvanceStateMachine( fsm_description_t	*fsm_desc )
 
 
 /**
- * Force the state machine to jump in a specific state (state_id)
- * and run the entry_fct of this state.
+ * Force la machine a entrer dans l'etat "state_id" passe en argument
+ * et execute la fonction "entry" de cet etat.
  *
- * @param[in,out]    fsm_desc
- *        State machine to drive.
+ * @param[in,out]	fsm_desc
+ *		Structure de description de la machine d'etat.
  *
- * @param[in]        state_id
- *        State to jump to.
+ * @param[in]		state_id
+ *		Etat dans lequel doit passer la machine d'etat.
  */
 void EntryInState( fsm_description_t *fsm_desc, int state_id )
 {
@@ -214,14 +212,13 @@ void EntryInState( fsm_description_t *fsm_desc, int state_id )
 
 
 /**
- * Return the current state of the state machine.
- * @todo fsm_description_t should be const as it is not modified.
+ * Retourne l'etat "state_id" dans lequel est actuellement la machine d'etat.
  *
- * @param[in]        fsm_desc
- *        State machine.
+ * @param[in]		fsm_desc
+ *		Structure de description de la machine d'etat.
  *
  * @return
- *        Current state identifier of the state machine.
+ *		Etat "state_id" dans lequel est la machine d'etat.
  */
 int GetCurrentStateId( fsm_description_t *fsm_desc )
 {
@@ -230,11 +227,11 @@ int GetCurrentStateId( fsm_description_t *fsm_desc )
 
 
 /**
- * Just return TRUE.
- * Used for always true transitions.
+ * Fonction qui ne fait que retourner TRUE.
+ * Utilisee pour les transitions toujours vraies.
  *
  * @return
- *        Always TRUE
+ *		TRUE
  */
 bool_t AlwaysTrue( void )
 {

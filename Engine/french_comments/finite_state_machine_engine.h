@@ -1,10 +1,8 @@
 /**
  * @file
  * 		Header file of the Finite State Machine Engine.
- *      See https://github.com/AdriZ/az-statemachine for more informations.
  *
  * @author		Adrien Zancan
- * @version     v1.1
  * @copyright	Simplified BSD License
  */
 
@@ -36,8 +34,8 @@
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef FINITE_STATE_MACHINE_ENGINE_H
-#define FINITE_STATE_MACHINE_ENGINE_H
+#ifndef _FINITE_STATE_MACHINE_ENGINE_H
+#define _FINITE_STATE_MACHINE_ENGINE_H
 
 
 /*---------------------------------------------------------------------------*/
@@ -52,8 +50,7 @@
 /* Types                                                                     */
 /*---------------------------------------------------------------------------*/
 
-/** Boolean type
- *  you can comment it if your system already has a bool_t type */
+/** Type booleen */
 typedef enum
 {
 	FALSE	= 0,
@@ -61,53 +58,38 @@ typedef enum
 } bool_t;
 
 
-/** One state defintion of the state machine */
+/** Etat de la machine */
 typedef struct
 {
-    /** State identifier */
-    int	state_id;
-    /** Function run when entering in the state */
-    void	(*entry_fct)( void );
-    /** Function run each time the machine is called,
-     *  as long as it is still in this state */
-    void	(*during_fct)( void );
+  int	state_id;				/**< Identifiant de l'etat */
+  void	(*entry_fct)( void );	/**< Fonction executee a l'entree dans l'etat */
+  void	(*during_fct)( void );	/**< Fonction executee a chaque appel de la machine, tant qu'on est dans cet etat */
 } fsm_state_t;
 
 /** Transition */
 typedef struct
 {
-    /** Departure state identifier */
-    int		from_state_id;
-    /** Arrival state identifier */
-    int		to_state_id;
-    /** Function returning the condition to go from from_state_id to to_state_id */
-    bool_t	(*condition_fct)( void );
-    /** Function run if condition_fct return TRUE and before going in the next state */
-    void	(*action_fct)( void );
+  int		from_state_id;				/**< Identifiant de l'etat de depart */
+  int		to_state_id;				/**< Identifiant de l'etat d'arrivee */
+  bool_t	(*condition_fct)( void );	/**< Fonction determinant la condition de transition */
+  void		(*action_fct)( void );		/**< Fonction executee si la condition est realisee, et avant de passer a l'etat suivant */
 } fsm_transition_t;
 
-/** State list */
+/** Liste d'etats */
 typedef fsm_state_t fsm_state_list_t[];
 
-/** Transition list (often called transition matrix) */
+/** Liste de transitions (ou matrice de transition) */
 typedef fsm_transition_t fsm_transition_matrix_t[];
 
-/** Whole description of a state machine */
+/** Description complete d'une machine d'etats */
 typedef struct
 {
-    /** Current state identifier */
-	int						current_state_id;
-    /** Number of states */
-	int						nb_of_states;       /**< @todo Should be const */
-    /** Identifier of the first state in the state machine */
-	int						init_state_id;		/**< @todo Should be const */
-    /** Identifier of an error state : in the improbable case of a call to an unknown
-     *  state identifier, the state machine will jump to this error_state */
-	int						error_state_id;		/**< @todo Should be const */
-    /** Whole state list */
-	fsm_state_list_t		*state_list;		/**< @todo Should be const */
-    /** Whole transition list/marix */
-	fsm_transition_matrix_t	*transition_matrix;	/**< @todo Should be const */
+	int						current_state_id;	/**< Indentifiant de l'etat courant */
+	int						nb_of_states;		/**< Nombre d'etats */
+	int						init_state_id;		/**< Identifiant de l'etat d'initialisation */
+	int						error_state_id;		/**< Identifiant de l'etat d'erreur */
+	fsm_state_list_t		*state_list;		/**< Liste des etats */
+	fsm_transition_matrix_t	*transition_matrix;	/**< Matrice de transitions */
 } fsm_description_t;
 
 
@@ -116,54 +98,55 @@ typedef struct
 /*---------------------------------------------------------------------------*/
 
 /**
- * Intialize the state machine in its "init_state_id" state.
- * Run the entry_fct of this state.
+ * Initialise la machine d'etat a son etat d'initialisation "init_state_id".
+ * Execute la fonction "entry" de cet etat.
  *
  * @param[in,out]	fsm_desc
- *      State machine to be initialized.
+ *		Structure de description de la machine d'etat a initialiser.
  */
 void InitStateMachine( fsm_description_t *fsm_desc );
 
 /**
- * One step run of the state machine.
+ * Fait avancer d'un pas la machine d'etat.
  *
  * @param[in,out]	fsm_desc
- *      State machine to be advanced.
+ *		Structure de description de la machine d'etat a faire avancer.
  */
 void AdvanceStateMachine( fsm_description_t *fsm_desc );
 
 /**
- * Force the state machine to jump in a specific state (state_id)
- * and run the entry_fct of this state.
+ * Force la machine a entrer dans l'etat "state_id" passe en argument
+ * et execute la fonction "entry" de cet etat.
  *
  * @param[in,out]	fsm_desc
- *		State machine to drive.
+ *		Structure de description de la machine d'etat.
  *
  * @param[in]		state_id
- *		State to jump to.
+ *		Etat dans lequel doit passer la machine d'etat.
  */
 void EntryInState( fsm_description_t *fsm_desc, int state_id );
 
 /**
- * Return the current state of the state machine.
- * @todo fsm_description_t should be const as it is not modified.
+ * Retourne l'etat "state_id" dans lequel est actuellement la machine d'etat.
+ * Remarque: fsm_desc est passe par parametre pour des raisons de performance
+ * mais n'est pas modifie par la fonction.
  *
  * @param[in]		fsm_desc
- *		State machine.
+ *		Structure de description de la machine d'etat.
  *
  * @return
- *		Current state identifier of the state machine.
+ *		Etat "state_id" dans lequel est la machine d'etat.
  */
 int GetCurrentStateId( fsm_description_t *fsm_desc );
 
 /**
- * Just return TRUE.
- * Used for always true transitions.
+ * Fonction qui ne fait que retourner TRUE.
+ * Utilisee pour les transitions toujours vraies.
  *
  * @return
- *		Always TRUE
+ *		TRUE
  */
 bool_t AlwaysTrue( void );
 
 
-#endif /* FINITE_STATE_MACHINE_ENGINE_H */
+#endif /* _FINITE_STATE_MACHINE_ENGINE_H */
