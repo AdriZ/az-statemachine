@@ -232,6 +232,42 @@ bool MainWindow::generateDot( QString baseName )
 		_ret = true;
 
         // ---- Test use of Graphviz library ----
+#if 1
+        _file.close();
+
+        // TODO: Create a class to use grahviz (.dot conversion)
+
+        if ( _file.open(QFile::ReadOnly | QFile::Text) )
+        {
+
+            GVC_t *gvc = nullptr;
+            Agraph_t *g = nullptr;
+            QString _outPath(_filePath);
+
+            _outPath += ".png";
+
+            gvc = gvContext();
+
+            /* Use of agmemread() instead of agread() because agread() can crash when
+             * az-statemachine-generator and graphviz library are built with different stdio
+             * library version */
+            g = agmemread(_file.readAll());
+
+            gvLayout(gvc, g, "dot");
+            gvRenderFilename(gvc, g, "png", _outPath.toUtf8());
+            gvFreeLayout(gvc, g);
+            agclose(g);
+            //qDebug() << gvFreeContext(gvc);
+
+            _file.close();
+
+            ui->render->setPixmap(QPixmap(_outPath));
+        }
+        else
+        {
+            qDebug() << "Error: Unable to re-open .dot file.";
+        }
+#else
         _file.close();
 
         GVC_t *gvc = nullptr;
@@ -256,6 +292,7 @@ bool MainWindow::generateDot( QString baseName )
         fclose(fp);
 
         ui->render->setPixmap(QPixmap(_outPath));
+#endif
 
         // ---- Test use of Graphviz library ----
     }
