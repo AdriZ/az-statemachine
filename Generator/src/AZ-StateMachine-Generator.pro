@@ -24,26 +24,28 @@ OBJECTS_DIR = "$$BUILD_DIR"
 
 CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
+
 	DESTDIR = "$$BIN_DIR/debug"
+
 } else:CONFIG(release, debug|release) {
 
     win32 {
         DESTDIR = "$$BIN_DIR/release/win32"
 
-        # Copie des dll utiles dans le répertoire release
-        # La commande "copy" de Windows n'accepte pas les chemins d'accès avec des slash, on les remplace donc par des backslash
+        # Copy usefull dll in the release directory
+        # The windows "copy" command doesn't understand path with slashes, so we replace them by backslahes
         DESTDIR_WIN = $${DESTDIR}
-        DESTDIR_WIN ~= s,/,\\,g
+        DESTDIR_WIN ~= s,/,\\,g     # convert slashes in backslashes
 
         postbuild.target    = postbuild
         postbuild.depends   += FORCE
         greaterThan(QT_MAJOR_VERSION, 4) {
             # Qt5
-            # windeployqt récupère automatiquement toutes les dll requises
+            # windeployqt automatically get all the required dll
             QMAKE_POST_LINK = windeployqt.exe "$$DESTDIR_WIN"
         } else {
             # Qt4
-            # Commande de copie des 4 dll requises
+            # Copy commands for the 4 required dll
             postbuild.commands   =   copy "$$QMAKE_LIBDIR_QT\\QtGui4.dll" "$$DESTDIR_WIN"
             postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\QtCore4.dll" "$$DESTDIR_WIN"
             postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\..\\..\\..\\..\\..\\mingw\\bin\\mingwm10.dll" "$$DESTDIR_WIN"
