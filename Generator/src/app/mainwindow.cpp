@@ -4,6 +4,7 @@
 // ---- Test use of Graphviz library ----
 #include <gvc.h>
 
+#include <iostream>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -257,7 +258,13 @@ bool MainWindow::generateDot( QString baseName )
             gvRenderFilename(gvc, g, "png", _outPath.toUtf8());
             gvFreeLayout(gvc, g);
             agclose(g);
-            //qDebug() << gvFreeContext(gvc);
+            gvFreeContext(gvc);
+
+//            qDebug() << "gvLayout:" << gvLayout(gvc, g, "dot");
+//            qDebug() << "gvRenderFilename:" << gvRenderFilename(gvc, g, "png", _outPath.toUtf8());
+//            qDebug() << "gvFreeLayout:" << gvFreeLayout(gvc, g);
+//            qDebug() << "agclose:" << agclose(g);
+//            qDebug() << "gvFreeContext:" << gvFreeContext(gvc);
 
             _file.close();
 

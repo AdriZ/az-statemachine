@@ -4,12 +4,14 @@
 #
 #-------------------------------------------------
 
-QT += core gui
-QT += xml
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets # For Qt5
+lessThan(QT_MAJOR_VERSION, 5): error(This project must compiled on Qt version 5 or greater)
+
+QT += core gui xml widgets
 
 TARGET = AZ-StateMachine-Generator
 TEMPLATE = app
+# for debug (active qDebug() outuputs on console)
+#CONFIG += console
 
 PARENT_DIR	= ".."
 BUILD_DIR	= "$${PARENT_DIR}/build"
@@ -21,6 +23,11 @@ RCC_DIR		= "$$BUILD_DIR"
 UI_DIR		= "$$BUILD_DIR"
 MOC_DIR		= "$$BUILD_DIR"
 OBJECTS_DIR = "$$BUILD_DIR"
+
+include($${CODE_DIR}/app.pri)
+
+# Add cots dll path to cots_dlls.files variable in order to copy them to the release directory
+include($${COTS_DIR}/cots.pri)
 
 CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
@@ -37,24 +44,22 @@ CONFIG(debug, debug|release) {
         DESTDIR_WIN = $${DESTDIR}
         DESTDIR_WIN ~= s,/,\\,g     # convert slashes in backslashes
 
-        postbuild.target    = postbuild
-        postbuild.depends   += FORCE
-        greaterThan(QT_MAJOR_VERSION, 4) {
-            # Qt5
-            # windeployqt automatically get all the required dll
-            QMAKE_POST_LINK = windeployqt.exe "$$DESTDIR_WIN"
-        } else {
-            # Qt4
-            # Copy commands for the 4 required dll
-            postbuild.commands   =   copy "$$QMAKE_LIBDIR_QT\\QtGui4.dll" "$$DESTDIR_WIN"
-            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\QtCore4.dll" "$$DESTDIR_WIN"
-            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\..\\..\\..\\..\\..\\mingw\\bin\\mingwm10.dll" "$$DESTDIR_WIN"
-            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\..\\..\\..\\..\\..\\mingw\\bin\\libgcc_s_dw2-1.dll" "$$DESTDIR_WIN"
-        }
+        # Qt5
+        # windeployqt automatically get all the Qt5 required dll
+        QMAKE_POST_LINK += windeployqt.exe "$$DESTDIR_WIN"
 
-        PRE_TARGETDEPS            = postbuild
-        QMAKE_EXTRA_TARGETS      += postbuild
+#        postbuild.target    = postbuild
+#        postbuild.depends   += FORCE
+#            # Qt4
+#            # Copy commands for the required dll
+#            postbuild.commands   =   copy "$$QMAKE_LIBDIR_QT\\QtGui4.dll" "$$DESTDIR_WIN"
+#            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\QtCore4.dll" "$$DESTDIR_WIN"
+#        PRE_TARGETDEPS            = postbuild
+#        QMAKE_EXTRA_TARGETS      += postbuild
 
+        # Copy 3rd party dlls
+        cots_dlls.path = $${DESTDIR}
+        INSTALLS += cots_dlls
     }
 
     macx {
@@ -65,5 +70,3 @@ CONFIG(debug, debug|release) {
     error(Unknown set of dependencies.)
 }
 
-include($${CODE_DIR}/app.pri)
-include($${COTS_DIR}/cots.pri)
