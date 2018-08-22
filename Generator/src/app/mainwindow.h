@@ -7,7 +7,7 @@
 
 #define APP_NAME "AZ-StateMachine Generator"
 #define APP_V_MAJ "1"
-#define APP_V_MIN "1"
+#define APP_V_MIN "2"
 #define APP_V_REV "0"
 
 
