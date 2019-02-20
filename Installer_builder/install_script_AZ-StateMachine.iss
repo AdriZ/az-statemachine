@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AZ-StateMachine"
-#define MyAppVersion "1.2"
+#define MyAppVersion "1.3"
 #define MyAppPublisher "Adrien Zancan"
 #define MyAppURL "https://github.com/AdriZ/az-statemachine"
 #define MyAppExeName "AZ-StateMachine-Generator.exe"
