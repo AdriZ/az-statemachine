@@ -1,10 +1,10 @@
 /**
  * @file
  * 		Header file of the Finite State Machine Engine.
- *      See https://github.com/AdriZ/az-statemachine for more informations.
+ * 		See https://github.com/AdriZ/az-statemachine for more informations.
  *
  * @author		Adrien Zancan
- * @version     v1.1
+ * @version		v1.1
  * @copyright	Simplified BSD License
  */
 
