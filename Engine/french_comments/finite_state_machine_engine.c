@@ -1,10 +1,8 @@
 /**
  * @file
  * 		Finite State Machine Engine.
- * 		See https://github.com/AdriZ/az-statemachine for more informations.
  *
  * @author		Adrien Zancan
- * @version		v1.1
  * @copyright	Simplified BSD License
  */
 
@@ -42,16 +40,6 @@
 /* Private functions                                                         */
 /*---------------------------------------------------------------------------*/
 
-/**
- *  Detect if a transition is a "null" transition, conrresponding to the end
- *  of a transition matrix.
- *  
- *  @param[in]	transition
- *      Transition to test.
- *  
- *  @return
- *      TRUE if this is a ending transition, FALSE if this is a real transition.
- */
 static bool_t IsFsmTransitionEnd( fsm_transition_t transition )
 {
 	return ( (transition.from_state_id == 0)
@@ -60,32 +48,23 @@ static bool_t IsFsmTransitionEnd( fsm_transition_t transition )
 		  && (transition.action_fct	== NULL) );
 }
 
-/**
- *  Get the current state of a state machine
- *  
- *  @param[out]		current_state
- *  	Current state found.
- *  
- *  @param[in,out]	fsm_desc
- *      State machine.
-*/
-static void FindCurrentState( fsm_state_t		*current_state,
+static void FindCurrentState( fsm_state_t			*current_state,
 							  fsm_description_t	*fsm_desc )
 {
 	int _state_index = 0;
 
-	/* Should never occur */
-	/* If current_state_id is higher than number of possible states */
+	/* Ne devrait jamais arriver */
+	/* Si le current_state_id est superieur au nombre d'etats */
 	if ( fsm_desc->current_state_id >= fsm_desc->nb_of_states )
 	{
-		/* But if it occurs (data corruption for exemple), we return in a known state : the error state */
+		/* Mais si ca arrivait, on se debrouille pour revenir dans un etat connu : l'etat d'erreur */
 		fsm_desc->current_state_id = fsm_desc->error_state_id;
 	}
 
-	/* Search current state (fsm_desc->current_state_id) */
+	/* Recherche de l'etat courant (fsm_desc->current_state_id) */
 	for ( _state_index=0; (*fsm_desc->state_list)[_state_index].state_id < (fsm_desc->nb_of_states); _state_index++ )
 	{
-		/* If the ID is the current state one */
+		/* Si l'id est celui de l'etat courant */
 		if ( (*fsm_desc->state_list)[_state_index].state_id == fsm_desc->current_state_id )
 		{
 			*current_state = (*fsm_desc->state_list)[_state_index];
@@ -94,33 +73,20 @@ static void FindCurrentState( fsm_state_t		*current_state,
 	}
 }
 
-/**
- *  Search the first transition with a fulfilled condition.
- *  
- *  @param[out]	transition
- *  	Transition found.
- *  
- *  @param[in]	fsm_desc
- *      State machine
- *  
- *  @return
- *      TRUE if a transition with fulfilled condition has been found.
- *  	FALSE if there's no fulfilled condition.
- */
 static bool_t FindTransition( fsm_transition_t	 *transition,
 							  fsm_description_t *fsm_desc )
 {
 	bool_t	_transition_is_found = FALSE;
 	int		_transition_index = 0;
 
-	/* While we did'nt reach the matrix end */
+	/* Tant qu'on n'est pas a la fin de la matrice */
 	while ( ! IsFsmTransitionEnd((*fsm_desc->transition_matrix)[_transition_index]) )
 	{
-		/* If we found the current_state && the condition is fulfilled */
+		/* Si on trouve le current_state && que la condition est satisfaite */
 		if ( ( fsm_desc->current_state_id == (*fsm_desc->transition_matrix)[_transition_index].from_state_id )
 		  && ( (*fsm_desc->transition_matrix)[_transition_index].condition_fct() == TRUE ) )
 		{
-			/* We found a transition, we save it, and return TRUE */
+			/* On a trouve une transition on l'enregistre et on retourne TRUE */
 			*transition = (*fsm_desc->transition_matrix)[_transition_index];
 			_transition_is_found = TRUE;
 			break;
@@ -131,45 +97,27 @@ static bool_t FindTransition( fsm_transition_t	 *transition,
 	return _transition_is_found;
 }
 
-/**
- *  Execute "during" function (if it exists) of a state
- *  
- *  @param[in]	state
- *      State
-*/
 static void ExecuteDuringStateFunction( fsm_state_t state )
 {
-	/* Execute "during" function if it exists */
+	/* Execution de la fonction "during" si elle a ete definie */
 	if ( state.during_fct != NULL )
 	{
 		state.during_fct();
 	}
 }
 
-/**
- *  Execute "entry" function (if it exists) of a state
- *  
- *  @param[in]	state
- *      State
-*/
 static void ExecuteEntryStateFunction( fsm_state_t state )
 {
-	/* Execute "entry" function if it exists */
+	/* Execution de la fonction "entry" si elle a ete definie */
 	if ( state.entry_fct != NULL )
 	{
 		state.entry_fct();
 	}
 }
 
-/**
- *  Execute "action" function (if it exists) of a transition
- *  
- *  @param[in]	transition
- *      Transition
-*/
 static void ExecuteTransitionAction( fsm_transition_t transition )
 {
-	/* Execute "action" function if it exists */
+	/* Execution de la fonction "action" si elle a ete definie */
 	if ( transition.action_fct != NULL )
 	{
 		transition.action_fct();
@@ -181,11 +129,11 @@ static void ExecuteTransitionAction( fsm_transition_t transition )
 /*---------------------------------------------------------------------------*/
 
 /**
- * Intialize the state machine in its "init_state_id" state.
- * Run the entry_fct of this state.
+ * Initialise la machine d'etat a son etat d'initialisation "init_state_id".
+ * Execute la fonction "entry" de cet etat.
  *
  * @param[in,out]	fsm_desc
- *      State machine to be initialized.
+ *		Structure de description de la machine d'etat a initialiser.
  */
 void InitStateMachine( fsm_description_t *fsm_desc )
 {
@@ -194,10 +142,10 @@ void InitStateMachine( fsm_description_t *fsm_desc )
 
 
 /**
- * One step run of the state machine.
+ * Fait avancer d'un pas la machine d'etat.
  *
  * @param[in,out]	fsm_desc
- *      State machine to be advanced.
+ *		Structure de description de la machine d'etat a faire avancer.
  */
 void AdvanceStateMachine( fsm_description_t	*fsm_desc )
 {
@@ -205,73 +153,72 @@ void AdvanceStateMachine( fsm_description_t	*fsm_desc )
 	fsm_transition_t	_transition	  			= {0};
 	bool_t				_transition_is_found	= FALSE;
 
-	/* Search current state */
+	/* Recherche de l'etat courant */
 	FindCurrentState( &_current_state, fsm_desc );
 
-	/* Search a possible transition with a fulfilled condition*/
+	/* Recherche de l'eventuelle transition */
 	_transition_is_found = FindTransition( &_transition, fsm_desc );
 	
-	/* If no transition found */
+	/* S'il n'y a pas de transition trouvee */
 	if ( !_transition_is_found )
 	{
-		/* Execute "during" function */
+		/* Execution de la fonction "during" */
 		ExecuteDuringStateFunction( _current_state );		
 	}
-	/* If there's a transition with a fulfilled condition */
+	/* S'il y a une condition de transition valide */
 	else
 	{
-		/* Execute "action" function */
+		/* Execute l'action */
 		ExecuteTransitionAction( _transition );
 
-		/* Save the next state and execute its "entry" function */
+		/* Enregistrement de l'etat suivant et execution de sa fonction "entry" */
 		EntryInState( fsm_desc, _transition.to_state_id );
 	}
 }
 
 
 /**
- * Force the state machine to jump in a specific state (state_id)
- * and run the entry_fct of this state.
+ * Force la machine a entrer dans l'etat "state_id" passe en argument
+ * et execute la fonction "entry" de cet etat.
  *
  * @param[in,out]	fsm_desc
- *        State machine to drive.
+ *		Structure de description de la machine d'etat.
  *
  * @param[in]		state_id
- *        State to jump to.
+ *		Etat dans lequel doit passer la machine d'etat.
  */
 void EntryInState( fsm_description_t *fsm_desc, int state_id )
 {
 	fsm_state_t _current_state = {0};
 
-	/* If state_id is valid */
+	/* Si le state_id n'est pas en dehors de la plage autorisee */
 	if ( state_id < (fsm_desc->nb_of_states) )
 	{
-		/* We set current state to requested state */
+		/* On positionne l'etat courant a l'etat demandÈ */
 		fsm_desc->current_state_id = state_id;
 	}
 	else
 	{
-		/* If not, this is an error, so we force to enter in the error state */
+		/* Sinon, c'est une erreur donc on force l'etat "erreur" */
 		fsm_desc->current_state_id = fsm_desc->error_state_id;
 	}
 
-	/* Search this new state */
+	/* Recherche de l'etat */
 	FindCurrentState( &_current_state, fsm_desc );
 
-	/* Execute the "entry" function */
+	/* Execution de la fonction "entry" */
 	ExecuteEntryStateFunction( _current_state );
 }
 
 
 /**
- * Return the current state of the state machine.
- * @todo fsm_description_t should be const as it is not modified.
+ * Retourne l'etat "state_id" dans lequel est actuellement la machine d'etat.
  *
- * @param[in]	fsm_desc
- *        State machine.
+ * @param[in]		fsm_desc
+ *		Structure de description de la machine d'etat.
  *
  * @return
- *        Current state identifier of the state machine.
+ *		Etat "state_id" dans lequel est la machine d'etat.
  */
 int GetCurrentStateId( fsm_description_t *fsm_desc )
 {
@@ -280,11 +227,11 @@ int GetCurrentStateId( fsm_description_t *fsm_desc )
 
 
 /**
- * Just return TRUE.
- * Used for always true transitions.
+ * Fonction qui ne fait que retourner TRUE.
+ * Utilisee pour les transitions toujours vraies.
  *
  * @return
- *        Always TRUE
+ *		TRUE
  */
 bool_t AlwaysTrue( void )
 {
