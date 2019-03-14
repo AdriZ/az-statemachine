@@ -106,7 +106,7 @@ typedef struct
 	int						error_state_id;		/**< @todo Should be const */
     /** Whole state list */
 	fsm_state_list_t		*state_list;		/**< @todo Should be const */
-    /** Whole transition list/marix */
+    /** Whole transition list-matrix */
 	fsm_transition_matrix_t	*transition_matrix;	/**< @todo Should be const */
 } fsm_description_t;
 
