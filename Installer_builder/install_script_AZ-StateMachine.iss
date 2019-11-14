@@ -39,6 +39,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Source: "..\Generator\bin\release\win32\AZ-StateMachine-Generator.exe"; DestDir: "{app}\Generator"; Flags: ignoreversion
 Source: "..\Engine\*"; DestDir: "{app}\Engine"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Generator\bin\release\win32\*"; DestDir: "{app}\Generator"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Examples\*.xml"; DestDir: "{app}\Examples"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
