@@ -1,0 +1,32 @@
+digraph "FSM Baby" {
+	dpi=100;
+	overlap=false;
+	labelloc="t";   // Text on top
+	labeljust="l";  // Text on left
+	label="\G\n\n"; // Display the graph title
+	
+	node [ shape=record, style="rounded,bold,filled", labelloc="t", fillcolor="#E7E7F0", fontname="Courier New", width=2.3];
+	edge [ fontname="Courier New", color="#0000FF", fontcolor="#00008B" ];
+	
+	__ENTER__ [shape=point, fillcolor=black, height=0.1, width=0.1];
+	__ENTER__ -> CRYING;
+
+	CRYING [ label =<<table border="0" cellborder="0" bgcolor="#E7E7F0"><tr><td bgcolor="#700000" align="center"><font color="#E7E7F0"> \N </font></td></tr><tr><td align="left" port="f0">entry:  OpenMouth()</td></tr><tr><td align="left" port="f1">during: DoLotOfNoise()</td></tr></table>> ];
+
+	INERT [ label =<<table border="0" cellborder="0" bgcolor="#E7E7F0"><tr><td bgcolor="black" align="center"><font color="#E7E7F0"> \N </font></td></tr><tr><td align="left" port="f0"> </td></tr><tr><td align="left" port="f1">during: JustBreath()</td></tr></table>> ];
+
+	SLEEPING [ label =<<table border="0" cellborder="0" bgcolor="#E7E7F0"><tr><td bgcolor="black" align="center"><font color="#E7E7F0"> \N </font></td></tr><tr><td align="left" port="f0">entry:  SpinelessPosition()</td></tr><tr><td align="left" port="f1">during: JustBreath()</td></tr></table>> ];
+
+	EATING [ label =<<table border="0" cellborder="0" bgcolor="#E7E7F0"><tr><td bgcolor="black" align="center"><font color="#E7E7F0"> \N </font></td></tr><tr><td align="left" port="f0">entry:  OpenMouth()</td></tr><tr><td align="left" port="f1">during: Suckle()</td></tr></table>> ];
+
+
+	CRYING -> INERT [ label = "AllIsGood()  " ];
+	INERT -> SLEEPING [ label = "AllIsGood()  " ];
+	INERT -> CRYING [ label = "IsHungryOrDirty()  " ];
+	INERT -> EATING [ label = "IsHungryAndTheresABreast()  " ];
+	EATING -> SLEEPING [ label = "IsTired()  " ];
+	SLEEPING -> CRYING [ label = "IsHungryOrDirty()  " ];
+	EATING -> CRYING [ label = "IsDirty()  " ];
+	EATING -> INERT [ label = "AllIsGood()  \l / Burp()  " ];
+	CRYING -> EATING [ label = "TheresABreast()  " ];
+}

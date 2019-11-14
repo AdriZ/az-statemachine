@@ -1,0 +1,50 @@
+<xazfsm>
+  <title>FSM Baby</title>
+
+  <state name="CRYING" init="true" error="true">
+    <entryfct>OpenMouth</entryfct>
+    <duringfct>DoLotOfNoise</duringfct>
+  </state>
+  <state name="INERT">
+    <duringfct>JustBreath</duringfct>
+  </state>
+  <state name="SLEEPING">
+    <entryfct>SpinelessPosition</entryfct>
+    <duringfct>JustBreath</duringfct>
+  </state>
+  <state name="EATING">
+    <entryfct>OpenMouth</entryfct>
+    <duringfct>Suckle</duringfct>
+  </state>
+
+  <transition from="CRYING" to="INERT">
+    <condition>AllIsGood</condition>
+  </transition>
+  <transition from="INERT" to="SLEEPING">
+    <condition>AllIsGood</condition>
+  </transition>
+  <transition from="INERT" to="CRYING">
+    <condition>IsHungryOrDirty</condition>
+  </transition>
+  <transition from="INERT" to="EATING">
+    <condition>IsHungryAndTheresABreast</condition>
+  </transition>
+  <transition from="EATING" to="SLEEPING">
+    <condition>IsTired</condition>
+  </transition>
+  <transition from="SLEEPING" to="CRYING">
+    <condition>IsHungryOrDirty</condition>
+  </transition>
+  <transition from="EATING" to="CRYING">
+    <condition>IsDirty</condition>
+  </transition>
+  <transition from="EATING" to="INERT">
+    <condition>AllIsGood</condition>
+    <action>Burp</action>
+  </transition>
+  <transition from="CRYING" to="EATING">
+    <condition>TheresABreast</condition>
+  </transition>
+
+</xazfsm>
+
