@@ -4,54 +4,62 @@
 #
 #-------------------------------------------------
 
-QT += core gui
-QT += xml
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets # For Qt5
+lessThan(QT_MAJOR_VERSION, 5): error(This project must compiled on Qt version 5 or greater)
+
+QT += core gui xml widgets
 
 TARGET = AZ-StateMachine-Generator
 TEMPLATE = app
+# for debug (active qDebug() outuputs on console)
+#CONFIG += console
 
 PARENT_DIR	= ".."
-BUILD_DIR	= "$$PARENT_DIR/build"
-BIN_DIR		= "$$PARENT_DIR/bin"
+BUILD_DIR	= "$${PARENT_DIR}/build"
+BIN_DIR		= "$${PARENT_DIR}/bin"
+CODE_DIR	= "$${PARENT_DIR}/src/app"
+COTS_DIR	= "$${PARENT_DIR}/src/cots"
 
 RCC_DIR		= "$$BUILD_DIR"
 UI_DIR		= "$$BUILD_DIR"
 MOC_DIR		= "$$BUILD_DIR"
 OBJECTS_DIR = "$$BUILD_DIR"
 
+include($${CODE_DIR}/app.pri)
+
+# Add cots dll path to cots_dlls.files variable in order to copy them to the release directory
+include($${COTS_DIR}/cots.pri)
 
 CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
+
 	DESTDIR = "$$BIN_DIR/debug"
+
 } else:CONFIG(release, debug|release) {
 
     win32 {
         DESTDIR = "$$BIN_DIR/release/win32"
 
-        # Copie des dll utiles dans le répertoire release
-        # La commande "copy" de Windows n'accepte pas les chemins d'accès avec des slash, on les remplace donc par des backslash
+        # Copy usefull dll in the release directory
+        # The windows "copy" command doesn't understand path with slashes, so we replace them by backslahes
         DESTDIR_WIN = $${DESTDIR}
-        DESTDIR_WIN ~= s,/,\\,g
+        DESTDIR_WIN ~= s,/,\\,g     # convert slashes in backslashes
 
-        postbuild.target    = postbuild
-        postbuild.depends   += FORCE
-        greaterThan(QT_MAJOR_VERSION, 4) {
-            # Qt5
-            # windeployqt récupère automatiquement toutes les dll requises
-            QMAKE_POST_LINK = windeployqt.exe "$$DESTDIR_WIN"
-        } else {
-            # Qt4
-            # Commande de copie des 4 dll requises
-            postbuild.commands   =   copy "$$QMAKE_LIBDIR_QT\\QtGui4.dll" "$$DESTDIR_WIN"
-            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\QtCore4.dll" "$$DESTDIR_WIN"
-            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\..\\..\\..\\..\\..\\mingw\\bin\\mingwm10.dll" "$$DESTDIR_WIN"
-            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\..\\..\\..\\..\\..\\mingw\\bin\\libgcc_s_dw2-1.dll" "$$DESTDIR_WIN"
-        }
+        # Qt5
+        # windeployqt automatically get all the Qt5 required dll
+        QMAKE_POST_LINK += windeployqt.exe "$$DESTDIR_WIN"
 
-        PRE_TARGETDEPS            = postbuild
-        QMAKE_EXTRA_TARGETS      += postbuild
+#        postbuild.target    = postbuild
+#        postbuild.depends   += FORCE
+#            # Qt4
+#            # Copy commands for the required dll
+#            postbuild.commands   =   copy "$$QMAKE_LIBDIR_QT\\QtGui4.dll" "$$DESTDIR_WIN"
+#            postbuild.commands  += & copy "$$QMAKE_LIBDIR_QT\\QtCore4.dll" "$$DESTDIR_WIN"
+#        PRE_TARGETDEPS            = postbuild
+#        QMAKE_EXTRA_TARGETS      += postbuild
 
+        # Copy 3rd party dlls
+        cots_dlls.path = $${DESTDIR}
+        INSTALLS += cots_dlls
     }
 
     macx {
@@ -62,20 +70,3 @@ CONFIG(debug, debug|release) {
     error(Unknown set of dependencies.)
 }
 
-
-SOURCES += main.cpp\
-	mainwindow.cpp \
-    smdescription.cpp \
-    dotfilegenerator.cpp \
-    xmlhandler.cpp \
-    sourcefilegenerator.cpp \
-	docfilegenerator.cpp
-
-HEADERS  += mainwindow.h \
-    smdescription.h \
-    dotfilegenerator.h \
-    xmlhandler.h \
-    sourcefilegenerator.h \
-	docfilegenerator.h
-
-FORMS    += mainwindow.ui
