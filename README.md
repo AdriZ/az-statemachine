@@ -76,8 +76,6 @@ Define a transition between two states.
 * Press "Generate files".
 * You can verify your FSM graph inside the application. A .png file representing this graph is also copy Generated_doc sub-directory of the XML directory.
 
-\[TO BE COMPLETED\]
-
 #### 3.2.3 Generated template C files
 * .h et .c files template for your new FSM are generated in a Generated_src sub-directory of the XML directory. Copy these files in your program source and fill its functions.
 
@@ -100,20 +98,25 @@ finite_state_machine_engine.h functions are used to access to your FSM. Most imp
 
 Depending on your application, `AdvanceStateMachine()` can be called in a periodic loop, in the main loop or just when there are specific events.
 
+With `GetCurrentStateId()` you can retrieve the current state.
+
 __Example using *FSM Baby*__
 
-The Examples directory contain a baby.azfsm.xml file. Open it in AZ-StateMachine application and generate files.
+The Examples directory contains a baby.azfsm.xml file. [baby.azfsm.xml](Examples/baby.azfsm.xml)
 
-In the a Generated_src sub-directory of the Examples directory you will find fsm_baby.h and fsm_baby.c templates. Copy them into your project sources.
+Open it with AZ-StateMachine application and generate files.
+
+The Generator will generate this graph :
+![FSM Baby graph](Examples/Generated_doc/fsm_baby.dot.png "FSM Baby graph")
+
+The Generaotor will also generate [fsm_baby.h](Examples/Generated_src/fsm_baby.h) and [fsm_baby.c](Examples/Generated_src/fsm_baby.c) templates in a Generated_src sub-directory of the Examples directory. Copy them into your project sources.
 
 In the inatialization phases of your application, add:
 
     InitStateMachine(&g_fsm_baby);
 
-In the main loop, add:
+In a loop or an event, add:
 
     AdvanceStateMachine(&g_fsm_baby);
     
-
-
-\[TO BE COMPLETED\]
+fsm_baby.c is just a template, functions has not been filled, so this example do nothing except endlessly turn inside the state machine, all conditions being allways true.
