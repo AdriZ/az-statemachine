@@ -21,16 +21,17 @@ The "az-statemachine engine" is composed of a couple of files used to run all th
   
   ### 2.2 macOS
   
-  * Download latest macOS application: [AZ-StateMachine-Generator.app](/Generator/bin/release/macx/AZ-StateMachine-Generator.app/ "AZ-StateMachine-Generator.app"). Put it in your Application folder or where you prefer.
-  * Download [Engine](/Engine/ "Engine").
+  * Go to [Downloads folder](/Downloads/ "Downloads folder") to download the macOS disk image file.
+  * Open/mount the DMG.
+  * Copy the AZ-State-Machine application in your Application folder or where you prefer.
   * Copy Engine files (finite_state_machine_engine.h and finite_state_machine_engine.c) in your program source.
-  * (Optional) Download [Examples](/Examples/ "Examples")
+  * (Optional) Copy Example files where you want.
 
 ## 3. Usage
   ### 3.1 Brief
   
   * Define your finite state machine (FSM) in a XML file (see Examples).
-  * Open AZ-StateMachine-Generator application and open your XML file with the "File > Open" menu.
+  * Open AZ-StateMachine application and open your XML file with the "File > Open" menu.
   * Press "Generate files".
   * .h et .c files are automatically generated in a Generated_src sub-directory of the XML directory. Copy these files in your program source and fill its functions.
   * Use the finite_state_machine_engine.h functions to deal with your new FSM. Use InitStateMachine() to init it and AdvanceStateMachine() to run it.
