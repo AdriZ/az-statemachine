@@ -2,14 +2,20 @@
 
 ## 1. Introduction
 
-az-statemachine will help you to easily create finite state machines in C language.
+az-statemachine will help you to **easily create finite state machines in C language**.
 
-The "az-statemachine generator" will generate state machine templates.
+### az-statemachine generator
+*az-statemachine generator* will generate state machine templates.
 It takes xml file describing states and transitions and generates :
   - visual state machine graphs
   - C language templates. All the states and transitions exists and the state machine can roll, but states and transitions are empty. Templates show a list of state functions and transition functions ready to be complete by the developper.
+  
+*az-statemachine generator* is compiled for Windows and macOS but, as it uses Qt multi-plateform framework, it should compile on Linux too.
 
-The "az-statemachine engine" is composed of a couple of files used to run all the created state machines.
+### az-statemachine engine
+*az-statemachine engine* is composed of a couple of files used to run all the created state machines.
+
+*az-statemachine engine* doesn't require any OS or library and it is really lightweight, so it is especially interested for small embedded system.
 
 ## 2. Install
 ### 2.1 Windows
