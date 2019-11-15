@@ -42,13 +42,31 @@ It will install Generator, Engine and Examples inside your Program Files folder.
 #### 3.2.1 FSM definition (XML file)
 The FSM are defined in a XML file. This file must begin with <xazfsm> and end with </xazfsm>.
 
-##### <title>
+##### \<title\>
 Define the FSM title. It will display as this on top of the graph. It will be converted in lowercase with underscores to name your .h .c files and your FSM global variable (with an added "g_" prefix).
+
 Example :
+
     <title>FSM Parameter Manager</title>
 will generate fsm_parameter_manager.h and fsm_parameter_manager.c template files.
-Your FSM globale variable will be :
+
+Your FSM global variable will be :
+
     fsm_description_t g_fsm_parameter_manager;
 
+##### \<state\>
+Define a new state.
+* name="YOUR_STATE_NAME" : State name. There's no character verification or replacement (not yet). So be carefull to not use special character (except underscores). This name will be used in a enum (prefixed with "ST_") so it is a good practice to name it in uppercase.
+* (optional) init="true" : If "true" this state will be the default entry of the state machine (state execute when you call InitStateMachine() ).
+* (optional) error="true" : The FSM will entry in this state in the improbable case it was in an undefined state. It never happened on my exeperience.
+* (optional) \<entryfct\> : Function run when entering in the state. Name it as a C function (no special character except underscores).
+* (optional) \<duringfct\> : Function run each time the machine is called as long as it is still in this state. Name it as a C function (no special character except underscores).
+
+##### \<transition\>
+Define a transition between two states.
+* from="YOUR_STATE_NAME" : Departure state name, as named with the \<state\> tag.
+* to="YOUR_STATE_NAME" : Arrival state name, as named with the \<state\> tag.
+* condition="CONDITION_FUNC" : Function returning the boolean condition to go from departure state to arrival state. Name it as a C function (no special character except underscores). You can use "AlwaysTrue" if you want a condition that is always true.
+* (optional) action="ACTION_FUNC" : Function run if CONDITION_FUNC return TRUE and before going in the arrival state. Name it as a C function (no special character except underscores).
 
 
