@@ -81,7 +81,7 @@ Define a transition between two states.
 #### 3.2.2 FSM Generator
 * Open AZ-StateMachine application and open your XML file with the "File > Open" menu.
 * Press "Generate files".
-* You can verify your FSM graph inside the application. A .png file representing this graph is also copy Generated_doc sub-directory of the XML directory.
+* You can verify your FSM graph inside the application. A .png file representing this graph is also copy in Generated_doc sub-directory of the XML directory.
 
 #### 3.2.3 Generated template C files
 * .h et .c files template for your new FSM are generated in a Generated_src sub-directory of the XML directory. Copy these files in your program source and fill its functions.
@@ -113,10 +113,11 @@ The Examples directory contains a baby.azfsm.xml file. [baby.azfsm.xml](Examples
 
 Open it with AZ-StateMachine application and generate files.
 
-The Generator will generate this graph :
-![FSM Baby graph](Examples/Generated_doc/fsm_baby.dot.png "FSM Baby graph")
+![FSM Baby screenshot](Screenshots/fsm_baby_win10_screenshot.png "FSM Baby screenshot")
 
-The Generaotor will also generate [fsm_baby.h](Examples/Generated_src/fsm_baby.h) and [fsm_baby.c](Examples/Generated_src/fsm_baby.c) templates in a Generated_src sub-directory of the Examples directory. Copy them into your project sources.
+The Generaotor will generate [fsm_baby.h](Examples/Generated_src/fsm_baby.h) and [fsm_baby.c](Examples/Generated_src/fsm_baby.c) templates in a Generated_src sub-directory of the Examples directory. Copy them into your project sources.
+
+A .png file representing the FSM graph is also copy in Generated_doc sub-directory of the XML directory. It is usefull to include it in a documentation.
 
 In the inatialization phases of your application, add:
 
