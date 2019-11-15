@@ -12,27 +12,43 @@ It takes xml file describing states and transitions and generates :
 The "az-statemachine engine" is composed of a couple of files used to run all the created state machines.
 
 ## 2. Install
-  ### 2.1 Windows
-  
-  * Go to [Downloads folder](/Downloads/ "Downloads folder") to download the Windows setup file.
-  * Run the setup file on your computer and follow instructions.
-  It will install Generator, Engine and Examples inside your Program Files folder.
-  * Copy "Program Files"/AZ-StateMachine/Engine files (finite_state_machine_engine.h and finite_state_machine_engine.c) in your program source.
-  
-  ### 2.2 macOS
-  
-  * Go to [Downloads folder](/Downloads/ "Downloads folder") to download the macOS disk image file.
-  * Open/mount the DMG.
-  * Copy the AZ-State-Machine application in your Application folder or where you prefer.
-  * Copy Engine files (finite_state_machine_engine.h and finite_state_machine_engine.c) in your program source.
-  * (Optional) Copy Example files where you want.
+### 2.1 Windows
+
+* Go to [Downloads folder](/Downloads/ "Downloads folder") to download the Windows setup file.
+* Run the setup file on your computer and follow instructions.
+It will install Generator, Engine and Examples inside your Program Files folder.
+* Copy "Program Files"/AZ-StateMachine/Engine files (finite_state_machine_engine.h and finite_state_machine_engine.c) in your program source.
+
+### 2.2 macOS
+
+* Go to [Downloads folder](/Downloads/ "Downloads folder") to download the macOS disk image file.
+* Open/mount the DMG.
+* Copy the AZ-State-Machine application in your Application folder or where you prefer.
+* Copy Engine files (finite_state_machine_engine.h and finite_state_machine_engine.c) in your program source.
+* (Optional) Copy Example files where you want.
 
 ## 3. Usage
-  ### 3.1 Brief
-  
-  * Define your finite state machine (FSM) in a XML file (see Examples).
-  * Open AZ-StateMachine application and open your XML file with the "File > Open" menu.
-  * Press "Generate files".
-  * .h et .c files are automatically generated in a Generated_src sub-directory of the XML directory. Copy these files in your program source and fill its functions.
-  * Use the finite_state_machine_engine.h functions to deal with your new FSM. Use InitStateMachine() to init it and AdvanceStateMachine() to run it.
-  
+### 3.1 Brief
+
+* Define your finite state machine (FSM) in a XML file (see Examples).
+* Open AZ-StateMachine application and open your XML file with the "File > Open" menu.
+* Press "Generate files".
+* You can verify your FSM graph inside the application. A .png file representing this graph is also copy Generated_doc sub-directory of the XML directory.
+* .h et .c files template for your new FSM are generated in a Generated_src sub-directory of the XML directory. Copy these files in your program source and fill its functions.
+* Use the finite_state_machine_engine.h functions to deal with your new FSM. Use InitStateMachine() to init it and AdvanceStateMachine() to run it.
+
+### 3.2 Details
+
+#### 3.2.1 FSM definition (XML file)
+The FSM are defined in a XML file. This file must begin with <xazfsm> and end with </xazfsm>.
+
+##### <title>
+Define the FSM title. It will display as this on top of the graph. It will be converted in lowercase with underscores to name your .h .c files and your FSM global variable (with an added "g_" prefix).
+Example :
+    <title>FSM Parameter Manager</title>
+will generate fsm_parameter_manager.h and fsm_parameter_manager.c template files.
+Your FSM globale variable will be :
+    fsm_description_t g_fsm_parameter_manager;
+
+
+
