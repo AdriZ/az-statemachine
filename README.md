@@ -40,7 +40,9 @@ It will install Generator, Engine and Examples inside your Program Files folder.
 ### 3.2 Details
 
 #### 3.2.1 FSM definition (XML file)
-The FSM are defined in a XML file. This file must begin with <xazfsm> and end with </xazfsm>.
+The FSM are defined in a XML file (see Examples directory).
+##### \<xazfsm\>
+This XML file must begin with \<xazfsm\> and end with \</xazfsm\>.
 
 ##### \<title\>
 Define the FSM title. It will display as this on top of the graph. It will be converted in lowercase with underscores to name your .h .c files and your FSM global variable (with an added "g_" prefix).
