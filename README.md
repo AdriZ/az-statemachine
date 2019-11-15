@@ -26,3 +26,12 @@ The "az-statemachine engine" is composed of a couple of files used to run all th
   * Copy Engine files (finite_state_machine_engine.h and finite_state_machine_engine.c) in your program source.
   * (Optional) Download [Examples](/Examples/ "Examples")
 
+## 3. Usage
+  ### 3.1 Brief
+  
+  * Define your finite state machine (FSM) in a XML file (see Examples).
+  * Open AZ-StateMachine-Generator application and open your XML file with the "File > Open" menu.
+  * Press "Generate files".
+  * .h et .c files are automatically generated in a Generated_src sub-directory of the XML directory. Copy these files in your program source and fill its functions.
+  * Use the finite_state_machine_engine.h functions to deal with your new FSM. Use InitStateMachine() to init it and AdvanceStateMachine() to run it.
+  
