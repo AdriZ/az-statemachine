@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-az-statemachine will help you to easily create finite state machines in C/C++ language.
+az-statemachine will help you to easily create finite state machines in C language.
 
 The "az-statemachine generator" will generate state machine templates.
 It takes xml file describing states and transitions and generates :
@@ -75,12 +75,45 @@ Define a transition between two states.
 * Open AZ-StateMachine application and open your XML file with the "File > Open" menu.
 * Press "Generate files".
 * You can verify your FSM graph inside the application. A .png file representing this graph is also copy Generated_doc sub-directory of the XML directory.
+
 \[TO BE COMPLETED\]
 
 #### 3.2.3 Generated template C files
 * .h et .c files template for your new FSM are generated in a Generated_src sub-directory of the XML directory. Copy these files in your program source and fill its functions.
+
 \[TO BE COMPLETED\]
 
-#### 3.2.4 Run the FSM
+#### 3.2.4 Run the FSM in your program
+Make sure you have copy finite_state_machine_engine.h, finite_state_machine_engine.c and your generated .h .c FSM templates.
+
+finite_state_machine_engine.h functions are used to access to your FSM. Most important are `InitStateMachine()` to init the FSM and `AdvanceStateMachine()` to run it.
+
+`InitStateMachine()` initialize the FSM with the "init" states (see "FSM definition (XML File)" chapter) and execute its "entry function".
+
+`AdvanceStateMachine()` do in this order :
+  * Search a possible transition with a fulfilled condition
+  * If no transition found:
+    * Execute the "during function" of the actual state.
+  * If there's a transition with a fulfilled condition (just the 1st one found is treated):
+    * Execute the "action" function of this transition
+    * Enter in the next state and execute its "entry function".
+
+Depending on your application, `AdvanceStateMachine()` can be called in a periodic loop, in the main loop or just when there are specific events.
+
+__Example using *FSM Baby*__
+
+The Examples directory contain a baby.azfsm.xml file. Open it in AZ-StateMachine application and generate files.
+
+In the a Generated_src sub-directory of the Examples directory you will find fsm_baby.h and fsm_baby.c templates. Copy them into your project sources.
+
+In the inatialization phases of your application, add:
+
+    InitStateMachine(&g_fsm_baby);
+
+In the main loop, add:
+
+    AdvanceStateMachine(&g_fsm_baby);
+    
+
 
 \[TO BE COMPLETED\]
