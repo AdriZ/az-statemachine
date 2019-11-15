@@ -117,7 +117,7 @@ Open it with AZ-StateMachine application and generate files.
 
 The Generaotor will generate [fsm_baby.h](Examples/Generated_src/fsm_baby.h) and [fsm_baby.c](Examples/Generated_src/fsm_baby.c) templates in a Generated_src sub-directory of the Examples directory. Copy them into your project sources.
 
-A .png file representing the FSM graph is also copy in Generated_doc sub-directory of the XML directory. It is usefull to include it in a documentation.
+A .png file representing the FSM graph is also copied in Generated_doc sub-directory of the XML directory. It is usefull in order to include it in a documentation.
 
 In the inatialization phases of your application, add:
 
