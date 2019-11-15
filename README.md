@@ -109,7 +109,7 @@ With `GetCurrentStateId()` you can retrieve the current state.
 
 __Example using *FSM Baby*__
 
-The Examples directory contains a baby.azfsm.xml file. [baby.azfsm.xml](Examples/baby.azfsm.xml)
+The Examples directory contains a [baby.azfsm.xml](Examples/baby.azfsm.xml) file.
 
 Open it with AZ-StateMachine application and generate files.
 
