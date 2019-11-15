@@ -107,7 +107,7 @@ Depending on your application, `AdvanceStateMachine()` can be called in a period
 
 With `GetCurrentStateId()` you can retrieve the current state.
 
-__Example using *FSM Baby*__
+### 3.3 Example
 
 The Examples directory contains a [baby.azfsm.xml](Examples/baby.azfsm.xml) file.
 
